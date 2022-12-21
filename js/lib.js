@@ -77,6 +77,31 @@ async function drawMode(mode, _x, _y, txt, foreground = "F", background = 0) {
 
       break;
     }
+
+    case "inside": {
+      for (let k = 0; k < txtSize; k++) {
+        const j = txtSize - 1 - k;
+
+        $(`#${x + k}-${y}`).css("color", COLORS[getColorNumber(foreground)]);
+        $(`#${x + k}-${y}`).css(
+          "background-color",
+          COLORS[getColorNumber(background)]
+        );
+        $(`#${x + k}-${y}`).text(txt[k]);
+
+        $(`#${j - x}-${y}`).css("color", COLORS[getColorNumber(foreground)]);
+        $(`#${j - x}-${y}`).css(
+          "background-color",
+          COLORS[getColorNumber(background)]
+        );
+        $(`#${j - x}-${y}`).text(txt[j]);
+
+        await sleep(20);
+        if (k > j) break;
+      }
+
+      break;
+    }
   }
 }
 
@@ -150,6 +175,25 @@ async function cleanMode(mode, _x, _y, txt) {
         $(`#${x + k}-${y}`).text("");
 
         await sleep(20);
+      }
+
+      break;
+    }
+
+    case "inside": {
+      for (let k = 0; k < txtSize; k++) {
+        const j = txtSize - 1 - k;
+
+        $(`#${x + k}-${y}`).css("color", COLORS[0]);
+        $(`#${x + k}-${y}`).css("background-color", COLORS[0]);
+        $(`#${x + k}-${y}`).text("");
+
+        $(`#${j - x}-${y}`).css("color", COLORS[0]);
+        $(`#${j - x}-${y}`).css("background-color", COLORS[0]);
+        $(`#${j - x}-${y}`).text("");
+
+        await sleep(20);
+        if (k > j) break;
       }
 
       break;

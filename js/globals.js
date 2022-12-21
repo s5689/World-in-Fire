@@ -1,5 +1,6 @@
 var WX; // X de la pantalla
 var WY; // Y de la pantalla
+var CONTEXT;
 var COLORS = [
   "black",
   "navy",
