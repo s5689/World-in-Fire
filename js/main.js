@@ -1,1 +1,6 @@
-console.log("sdaasd");
+$(document).ready(() => {
+  setWindowSize();
+
+  __palette();
+  _0_menu();
+});
