@@ -21,6 +21,7 @@ function setWindowSize(limX = 80, limY = 25) {
   }
 }
 
+// Renderizar una linea de texto.
 function draw(_x, _y, txt, foreground = "F", background = 0) {
   const txtSize = txt.length;
   let x = _x;
@@ -39,6 +40,7 @@ function draw(_x, _y, txt, foreground = "F", background = 0) {
   }
 }
 
+// Renderizar una linea de texto con una animacion especifica
 async function drawMode(mode, _x, _y, txt, foreground = "F", background = 0) {
   const txtSize = txt.length;
   let x = _x;
@@ -105,6 +107,9 @@ async function drawMode(mode, _x, _y, txt, foreground = "F", background = 0) {
   }
 }
 
+// Renderizar un grafico en formato text/color/background.
+// !!! => Renderiza un frame completo de la animacion sin pausar la ejecucion.
+// (?) => Recomendado solo usar con animaciones donde cada frame tenga un gran tamaño.
 function drawGraph(obj, _x, _y) {
   const txt = obj.text;
   const col = obj.color;
@@ -115,8 +120,6 @@ function drawGraph(obj, _x, _y) {
 
   if (x === -1) x = Math.round((WX - txtSize) / 2);
   if (y === -1) y = Math.round((WY - txtSize) / 2);
-
-  // console.log(typeof back !== "undefined");
 
   for (let k = 0; k < txt.length; k++) {
     for (let j = 0; j < txt[k].length; j++) {
@@ -132,6 +135,7 @@ function drawGraph(obj, _x, _y) {
   }
 }
 
+// Limpia una linea de texto
 function clean(_x, _y, txt) {
   const txtSize = txt.length;
   let x = _x;
@@ -147,6 +151,7 @@ function clean(_x, _y, txt) {
   }
 }
 
+// Limpia una linea de texto con una animacion especifica
 async function cleanMode(mode, _x, _y, txt) {
   const txtSize = txt.length;
   let x = _x;
@@ -212,4 +217,8 @@ function getColorNumber(e) {
   if (x == "F") x = 15;
 
   return x;
+}
+
+function getCenterX(e) {
+  return Math.round((WX - e.length) / 2);
 }
