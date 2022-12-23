@@ -1,0 +1,27 @@
+@font-face {
+  font-family: Terminal;
+  src: url(../assets/TerminalVector.ttf);
+}
+
+body {
+  background-color: black;
+  color: white;
+  text-align: -webkit-center;
+}
+
+#window {
+  padding-top: 10vh;
+}
+
+#game {
+  border-spacing: 0;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.pixel {
+  font-family: Terminal;
+  font-size: 12px !important;
+  height: 12px;
+  width: 8px;
+  padding: 0px;
+}

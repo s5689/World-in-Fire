@@ -1,0 +1,18 @@
+Colores:
+
+ 0: black
+ 1: navy
+ 2: darkgreen
+ 3: darkcyan
+ 4: darkred
+ 5: darkmagenta
+ 6: goldenrod
+ 7: silver
+ 8: grey
+ 9: blue
+10: lime
+11: turquoise
+12: red
+13: fuchsia
+14: gold
+15: white
