@@ -29,7 +29,7 @@ class Anim_0_wif extends Animation {
 
     for (let k = 0; k < _0.length; k++) {
       for (let j = 0; j < _0[k].length; j++) {
-        draw(9 + j, 1 + k, _0[k][j], "C");
+        draw(9 + j, 1 + k, _0[k][j], C);
       }
     }
 
@@ -37,7 +37,7 @@ class Anim_0_wif extends Animation {
 
     for (let k = 0; k < _1.length; k++) {
       for (let j = 0; j < _1[k].length; j++) {
-        draw(9 + j, 1 + k, _1[k][j], "C");
+        draw(9 + j, 1 + k, _1[k][j], C);
       }
     }
 
@@ -45,7 +45,7 @@ class Anim_0_wif extends Animation {
 
     for (let k = 0; k < _2.length; k++) {
       for (let j = 0; j < _2[k].length; j++) {
-        draw(9 + j, 1 + k, _2[k][j], "C");
+        draw(9 + j, 1 + k, _2[k][j], C);
       }
     }
 

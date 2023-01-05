@@ -7,6 +7,11 @@ function input() {
         _0_menu.input(key);
         break;
       }
+
+      case "_1_explain": {
+        _1_explain.end();
+        break;
+      }
     }
   });
 }

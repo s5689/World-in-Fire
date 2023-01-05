@@ -47,6 +47,7 @@ class Anim_1_explain {
     let x = getCenterX(_0.text[0]);
     let y = 3;
 
+    // form
     // ►►►
     for (let k = 0; k <= xSize; k++) {
       draw(x + k, y, _0.text[0][k], _0.color[0][k]);
@@ -69,6 +70,14 @@ class Anim_1_explain {
     for (let k = ySize; k >= 0; k--) {
       draw(x, y + k, _0.text[k][0], _0.color[k][0]);
       await sleep(12);
+    }
+
+    // txt
+    for (let k = 2; k <= xSize - 1; k++) {
+      for (let j = 1; j <= ySize - 1; j++) {
+        draw(x + k, y + j, _0.text[j][k], _0.color[j][k]);
+        await sleep(1);
+      }
     }
   }
 }

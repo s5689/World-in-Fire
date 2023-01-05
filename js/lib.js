@@ -17,31 +17,31 @@ function setWindowSize(limX = 80, limY = 25) {
     }
 
     txt += "</tr>";
-    $("#game").append(txt);
+
+    $(`#layer_-1`).append(txt);
   }
 }
 
 // Renderizar una linea de texto.
-function draw(_x, _y, txt, foreground = "F", background = 0) {
+function draw(_x, _y, txt, foreground = "F", background = 0, sus = "a") {
   const txtSize = txt.length;
   let x = _x;
   let y = _y;
+
+  console.log(sus);
 
   if (x === -1) x = Math.round((WX - txtSize) / 2);
   if (y === -1) y = Math.round((WY - txtSize) / 2);
 
   for (let k = 0; k < txtSize; k++) {
     $(`#${x + k}-${y}`).css("color", COLORS[getColorNumber(foreground)]);
-    $(`#${x + k}-${y}`).css(
-      "background-color",
-      COLORS[getColorNumber(background)]
-    );
+    $(`#${x + k}-${y}`).css("background-color", COLORS[getColorNumber(background)]);
     $(`#${x + k}-${y}`).text(txt[k]);
   }
 }
 
 // Renderizar una linea de texto con una animacion especifica
-async function drawMode(mode, _x, _y, txt, foreground = "F", background = 0) {
+async function drawMode(mode, _x, _y, txt, foreground = "F", background = 0, speed = 20) {
   const txtSize = txt.length;
   let x = _x;
   let y = _y;
@@ -53,13 +53,10 @@ async function drawMode(mode, _x, _y, txt, foreground = "F", background = 0) {
     case "right": {
       for (let k = 0; k < txtSize; k++) {
         $(`#${x + k}-${y}`).css("color", COLORS[getColorNumber(foreground)]);
-        $(`#${x + k}-${y}`).css(
-          "background-color",
-          COLORS[getColorNumber(background)]
-        );
+        $(`#${x + k}-${y}`).css("background-color", COLORS[getColorNumber(background)]);
         $(`#${x + k}-${y}`).text(txt[k]);
 
-        await sleep(20);
+        await sleep(speed);
       }
 
       break;
@@ -68,13 +65,10 @@ async function drawMode(mode, _x, _y, txt, foreground = "F", background = 0) {
     case "left": {
       for (let k = txtSize - 1; k >= 0; k--) {
         $(`#${x + k}-${y}`).css("color", COLORS[getColorNumber(foreground)]);
-        $(`#${x + k}-${y}`).css(
-          "background-color",
-          COLORS[getColorNumber(background)]
-        );
+        $(`#${x + k}-${y}`).css("background-color", COLORS[getColorNumber(background)]);
         $(`#${x + k}-${y}`).text(txt[k]);
 
-        await sleep(20);
+        await sleep(speed);
       }
 
       break;
@@ -85,20 +79,14 @@ async function drawMode(mode, _x, _y, txt, foreground = "F", background = 0) {
         const j = txtSize - 1 - k;
 
         $(`#${x + k}-${y}`).css("color", COLORS[getColorNumber(foreground)]);
-        $(`#${x + k}-${y}`).css(
-          "background-color",
-          COLORS[getColorNumber(background)]
-        );
+        $(`#${x + k}-${y}`).css("background-color", COLORS[getColorNumber(background)]);
         $(`#${x + k}-${y}`).text(txt[k]);
 
         $(`#${j - x}-${y}`).css("color", COLORS[getColorNumber(foreground)]);
-        $(`#${j - x}-${y}`).css(
-          "background-color",
-          COLORS[getColorNumber(background)]
-        );
+        $(`#${j - x}-${y}`).css("background-color", COLORS[getColorNumber(background)]);
         $(`#${j - x}-${y}`).text(txt[j]);
 
-        await sleep(20);
+        await sleep(speed);
         if (k > j) break;
       }
 
@@ -124,10 +112,7 @@ function drawGraph(obj, _x, _y) {
   for (let k = 0; k < txt.length; k++) {
     for (let j = 0; j < txt[k].length; j++) {
       if (typeof back !== "undefined")
-        $(`#${x + j}-${y + k}`).css(
-          "background-color",
-          COLORS[getColorNumber(back[k][j])]
-        );
+        $(`#${x + j}-${y + k}`).css("background-color", COLORS[getColorNumber(back[k][j])]);
 
       $(`#${x + j}-${y + k}`).css("color", COLORS[getColorNumber(col[k][j])]);
       $(`#${x + j}-${y + k}`).text(txt[k][j]);
@@ -152,7 +137,7 @@ function clean(_x, _y, txt) {
 }
 
 // Limpia una linea de texto con una animacion especifica
-async function cleanMode(mode, _x, _y, txt) {
+async function cleanMode(mode, _x, _y, txt, speed = 20) {
   const txtSize = txt.length;
   let x = _x;
   let y = _y;
@@ -167,7 +152,7 @@ async function cleanMode(mode, _x, _y, txt) {
         $(`#${x + k}-${y}`).css("background-color", COLORS[0]);
         $(`#${x + k}-${y}`).text("");
 
-        await sleep(20);
+        await sleep(speed);
       }
 
       break;
@@ -179,7 +164,7 @@ async function cleanMode(mode, _x, _y, txt) {
         $(`#${x + k}-${y}`).css("background-color", COLORS[0]);
         $(`#${x + k}-${y}`).text("");
 
-        await sleep(20);
+        await sleep(speed);
       }
 
       break;
@@ -197,7 +182,7 @@ async function cleanMode(mode, _x, _y, txt) {
         $(`#${j - x}-${y}`).css("background-color", COLORS[0]);
         $(`#${j - x}-${y}`).text("");
 
-        await sleep(20);
+        await sleep(speed);
         if (k > j) break;
       }
 
@@ -206,6 +191,9 @@ async function cleanMode(mode, _x, _y, txt) {
   }
 }
 
+// ---------------------------------
+// Funciones Internas de la libreria
+// ---------------------------------
 function getColorNumber(e) {
   let x = e;
 
@@ -222,3 +210,5 @@ function getColorNumber(e) {
 function getCenterX(e) {
   return Math.round((WX - e.length) / 2);
 }
+
+function inLayer(e) {}

@@ -19,15 +19,15 @@ class Obj_0_menu {
   renderMenu() {
     switch (this.opc) {
       case 0: {
-        draw(-1, 13, " Nueva Partida ", "F", "C");
-        draw(-1, 14, " Salir ", "F");
+        draw(-1, 13, " Nueva Partida ", F, C);
+        draw(-1, 14, " Salir ", F);
 
         break;
       }
 
       case 1: {
-        draw(-1, 13, " Nueva Partida ", "F");
-        draw(-1, 14, " Salir ", "F", "C");
+        draw(-1, 13, " Nueva Partida ", F);
+        draw(-1, 14, " Salir ", F, C);
 
         break;
       }

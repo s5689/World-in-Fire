@@ -19,6 +19,13 @@ var COLORS = [
   "gold",
   "white",
 ];
+// Colores Hexadecimales
+var A = "A";
+var B = "B";
+var C = "C";
+var D = "D";
+var E = "E";
+var F = "F";
 
 // Formato basico de animaciones
 class Animation {
