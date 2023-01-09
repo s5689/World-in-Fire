@@ -16,3 +16,90 @@ function __palette() {
     k++;
   });
 }
+
+function __chars() {
+  const list = [
+    "░",
+    "▒",
+    "▓",
+    "█",
+    "▄",
+    "▌",
+    "▐",
+    "▀",
+
+    "│",
+    "┤",
+    "├",
+    "┌",
+    "┐",
+    "└",
+    "┘",
+    "┴",
+    "┬",
+    "─",
+    "┼",
+
+    "   ",
+    "╡",
+    "╞",
+    "╒",
+    "╕",
+    "╘",
+    "╛",
+    "╨",
+    "╥",
+    "   ",
+    "╪",
+
+    "   ",
+    "╢",
+    "╟",
+    "╓",
+    "╖",
+    "╙",
+    "╜",
+    "╧",
+    "╤",
+    "   ",
+    "╫",
+
+    "║",
+    "╣",
+    "╠",
+    "╔",
+    "╗",
+    "╚",
+    "╝",
+    "╩",
+    "╦",
+    "═",
+    "╬",
+  ];
+
+  let k = 0;
+  list.forEach((value) => {
+    $("#chars").append(`<span> ${value} </span>`);
+
+    if (value === "▀") $("#chars").append(`<br /><br/>`);
+    if (value === "┼") $("#chars").append(`<br /><br/>`);
+    if (value === "╪") $("#chars").append(`<br /><br/>`);
+    if (value === "╫") $("#chars").append(`<br /><br/>`);
+
+    k++;
+  });
+}
+
+class CCronometro extends SpriteAnimated {
+  async start() {
+    let ms = 0;
+
+    while (this.state) {
+      await sleep(1);
+      ms++;
+    }
+
+    console.log(`${ms}ms.`);
+  }
+}
+var Cronometro = new CCronometro();

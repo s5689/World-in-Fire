@@ -15,11 +15,17 @@ body {
 
 .game {
   border-spacing: 0;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  position: relative;
+}
+
+#layer_-2 {
+  z-index: -2;
 }
 
 #layer_-1 {
   z-index: -1;
+  margin-top: -302px;
 }
 
 #layer_0 {
@@ -28,6 +34,11 @@ body {
 }
 
 #layer_1 {
+  z-index: 1;
+  margin-top: -302px;
+}
+
+#layer_2 {
   z-index: 1;
   margin-top: -302px;
 }

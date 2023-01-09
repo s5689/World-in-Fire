@@ -1,17 +1,35 @@
 class Obj_1_explain {
-  async run() {
-    const explain = new Anim_1_explain();
+  constructor() {
+    this.explain = new Anim_1_explain();
+  }
 
-    await explain.start();
-    drawMode("right", -1, 1, " Definicion de Abreviaturas ", F, 9, 10);
-    await drawMode("right", -1, 22, "Presiona una tecla para continuar.", C, 0, 10);
+  async run() {
+    await this.explain.start();
+    draw({
+      x: M,
+      y: 1,
+      t: " Definicion de Abreviaturas ",
+      f: F,
+      b: 9,
+      m: right,
+      s: 10,
+    });
+
+    await draw({
+      x: M,
+      y: 22,
+      t: "Presiona una tecla para continuar.",
+      f: C,
+      m: right,
+      s: 10,
+    });
 
     CONTEXT = "_1_explain";
   }
 
   async end() {
     CONTEXT = "";
-    console.log("a");
+    main.next();
   }
 }
 

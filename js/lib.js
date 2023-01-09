@@ -6,189 +6,318 @@ function setWindowSize(limX = 80, limY = 25) {
   WX = limX;
   WY = limY;
 
-  for (let y = 0; y < limY; y++) {
-    let txt = "<tr>";
+  for (let k = -2; k <= 2; k++) {
+    for (let y = 0; y < limY; y++) {
+      let txt = "<tr id='" + k + "__y" + y + "' >";
 
-    for (let x = 0; x < limX; x++) {
-      txt += "<td ";
-      txt += "id='" + x + "-" + y + "' ";
-      txt += "class='pixel' ";
-      txt += "></td>";
-    }
-
-    txt += "</tr>";
-
-    $(`#layer_-1`).append(txt);
-  }
-}
-
-// Renderizar una linea de texto.
-function draw(_x, _y, txt, foreground = "F", background = 0, sus = "a") {
-  const txtSize = txt.length;
-  let x = _x;
-  let y = _y;
-
-  console.log(sus);
-
-  if (x === -1) x = Math.round((WX - txtSize) / 2);
-  if (y === -1) y = Math.round((WY - txtSize) / 2);
-
-  for (let k = 0; k < txtSize; k++) {
-    $(`#${x + k}-${y}`).css("color", COLORS[getColorNumber(foreground)]);
-    $(`#${x + k}-${y}`).css("background-color", COLORS[getColorNumber(background)]);
-    $(`#${x + k}-${y}`).text(txt[k]);
-  }
-}
-
-// Renderizar una linea de texto con una animacion especifica
-async function drawMode(mode, _x, _y, txt, foreground = "F", background = 0, speed = 20) {
-  const txtSize = txt.length;
-  let x = _x;
-  let y = _y;
-
-  if (x === -1) x = Math.round((WX - txtSize) / 2);
-  if (y === -1) y = Math.round((WY - txtSize) / 2);
-
-  switch (mode) {
-    case "right": {
-      for (let k = 0; k < txtSize; k++) {
-        $(`#${x + k}-${y}`).css("color", COLORS[getColorNumber(foreground)]);
-        $(`#${x + k}-${y}`).css("background-color", COLORS[getColorNumber(background)]);
-        $(`#${x + k}-${y}`).text(txt[k]);
-
-        await sleep(speed);
+      for (let x = 0; x < limX; x++) {
+        txt += "<td ";
+        txt += "id='" + k + "__" + x + "-" + y + "' ";
+        txt += "class='pixel' ";
+        txt += "></td>";
       }
 
-      break;
-    }
+      txt += "</tr>";
 
-    case "left": {
-      for (let k = txtSize - 1; k >= 0; k--) {
-        $(`#${x + k}-${y}`).css("color", COLORS[getColorNumber(foreground)]);
-        $(`#${x + k}-${y}`).css("background-color", COLORS[getColorNumber(background)]);
-        $(`#${x + k}-${y}`).text(txt[k]);
-
-        await sleep(speed);
-      }
-
-      break;
-    }
-
-    case "inside": {
-      for (let k = 0; k < txtSize; k++) {
-        const j = txtSize - 1 - k;
-
-        $(`#${x + k}-${y}`).css("color", COLORS[getColorNumber(foreground)]);
-        $(`#${x + k}-${y}`).css("background-color", COLORS[getColorNumber(background)]);
-        $(`#${x + k}-${y}`).text(txt[k]);
-
-        $(`#${j - x}-${y}`).css("color", COLORS[getColorNumber(foreground)]);
-        $(`#${j - x}-${y}`).css("background-color", COLORS[getColorNumber(background)]);
-        $(`#${j - x}-${y}`).text(txt[j]);
-
-        await sleep(speed);
-        if (k > j) break;
-      }
-
-      break;
+      $(`#layer_${k}`).append(txt);
     }
   }
 }
 
-// Renderizar un grafico en formato text/color/background.
-// !!! => Renderiza un frame completo de la animacion sin pausar la ejecucion.
-// (?) => Recomendado solo usar con animaciones donde cada frame tenga un gran tamaño.
-function drawGraph(obj, _x, _y) {
-  const txt = obj.text;
-  const col = obj.color;
-  const back = obj.background;
+/**
+ * #### Draw Gigachad
+ * Recibe un objeto como parametro.
+ *
+ * `x`: Punto X
+ *
+ * `y`: Punto Y
+ *
+ * `t`: Texto
+ *
+ * `f`: Color Foreground
+ *
+ * `b`: Color Background
+ *
+ * `l`: Layer seleccionado
+ *
+ * `m`: Modo Animacion (`right`, `left`, `inside`)
+ *
+ * `s`: Velocidad de Animacion
+ *
+ * `o`: Objeto de Grafico (Si es array se renderiza en modo multicapas)
+ *
+ * `ol`: Renderizado directo de layer.
+ */
+async function draw(props) {
+  let { x, y, t, f, b, m, o, s, l, ol } = props;
+  let tSize; // Tamaño del texto
+  let aSize; // Tamaño del array
 
-  let x = _x;
-  let y = _y;
+  vars();
 
-  if (x === -1) x = Math.round((WX - txtSize) / 2);
-  if (y === -1) y = Math.round((WY - txtSize) / 2);
+  if (typeof m !== "undefined") {
+    await mode();
+    return true;
+  }
 
-  for (let k = 0; k < txt.length; k++) {
-    for (let j = 0; j < txt[k].length; j++) {
-      if (typeof back !== "undefined")
-        $(`#${x + j}-${y + k}`).css("background-color", COLORS[getColorNumber(back[k][j])]);
+  if (typeof o !== "undefined") {
+    graph();
+    return true;
+  }
 
-      $(`#${x + j}-${y + k}`).css("color", COLORS[getColorNumber(col[k][j])]);
-      $(`#${x + j}-${y + k}`).text(txt[k][j]);
+  if (typeof ol !== "undefined") {
+    onLayer();
+    return true;
+  }
+
+  normal();
+
+  function vars() {
+    // Valor tSize & aSize al ser texto
+    if (typeof t !== "undefined") {
+      tSize = t.length;
+      aSize = 1;
     }
+
+    // Valor tSize & aSize al ser Objeto/Array objeto
+    if (Array.isArray(o)) {
+      tSize = o[0].text[0].length;
+      aSize = o[0].text.length;
+    } else if (typeof o !== "undefined") {
+      tSize = o.text[0].length;
+      aSize = o.text.length;
+    }
+
+    // Otros parametros por default
+    if (typeof f === "undefined" || f === " ") f = F;
+    if (typeof b === "undefined" || b === " ") b = T;
+    if (typeof s === "undefined") s = 20;
+    if (typeof l === "undefined") l = 0;
+
+    // Si se debe centrar
+    if (x === M) x = Math.round((WX - tSize) / 2);
+    if (y === M) y = Math.round((WY - aSize) / 2);
+  }
+
+  // Renderizar una linea de texto.
+  function normal() {
+    for (let k = 0; k < tSize; k++) {
+      render(l, x + k, y, t[k], f, b);
+    }
+  }
+
+  // Renderizar una linea de texto con una animacion especifica
+  async function mode() {
+    switch (m) {
+      case "right": {
+        for (let k = 0; k < tSize; k++) {
+          render(l, x + k, y, t[k], f, b);
+          await sleep(s);
+        }
+
+        break;
+      }
+
+      case "left": {
+        for (let k = tSize - 1; k >= 0; k--) {
+          render(l, x + k, y, t[k], f, b);
+          await sleep(s);
+        }
+
+        break;
+      }
+
+      case "inside": {
+        for (let k = 0; k < tSize; k++) {
+          const j = tSize - 1 - k;
+
+          render(l, x + k, y, t[k], f, b);
+          render(l, x + j, y, t[j], f, b);
+          await sleep(s);
+
+          if (k > j) break;
+        }
+
+        break;
+      }
+    }
+  }
+
+  // Renderiza un sprite en formato text/color/background.
+  // !!! => Renderiza un frame completo de la animacion sin pausar la ejecucion.
+  // [?] => Si es recibido un array, se usara el modo de renderizado multicapas.
+  // ^^^ => Renderiza cada capa de forma descendente, comenzando por la mas alta.
+  // (?) => Recomendado solo usar con animaciones donde cada frame tenga un buen tamaño.
+  function graph() {
+    let length = 1;
+    let om = o;
+
+    if (Array.isArray(o)) {
+      length = o.length;
+      l++;
+    }
+
+    for (let i = 0; i < length; i++) {
+      if (length !== 1) {
+        o = om[i];
+        l--;
+      }
+
+      const { text, color, background } = o;
+      let _f = f;
+      let _b = b;
+
+      for (let k = 0; k < text.length; k++) {
+        for (let j = 0; j < text[k].length; j++) {
+          if (typeof color !== "undefined") _f = color[k][j];
+          if (typeof background !== "undefined") _b = background[k][j];
+
+          render(l, x + j, y + k, text[k][j], _f, _b);
+        }
+      }
+    }
+  }
+
+  // Renderiza un sprite en formato text/color/background directamente en un layer.
+  // !!! => Renderiza un frame completo reemplazando todo lo que haya en el layer.
+  // (?) => SOLO usar con animaciones donde cada frame sea del tamaño completo del layer.
+  function onLayer() {
+    const { text, color, background } = ol;
+    let build = "";
+
+    // Descomponer ol en una cadena de texto completa
+    for (let _y = 0; _y < WY; _y++) {
+      let txt = "<tr id='" + l + "__y" + _y + "' >";
+
+      for (let _x = 0; _x < WX; _x++) {
+        let back = T;
+        let fore = F;
+
+        if (typeof background !== "undefined") back = background[_y][_x];
+        if (typeof color !== "undefined") fore = color[_y][_x];
+
+        txt += "<td ";
+        txt += "id='" + l + "__" + _x + "-" + _y + "' ";
+        txt += "class='pixel' ";
+        txt += "style=' ";
+        txt += "color: " + COLORS[getColorNumber(fore)] + "; ";
+        txt += "background-color: " + COLORS[getColorNumber(back)];
+        txt += "' >" + text[_y][_x] + "</td>";
+      }
+
+      txt += "</tr>";
+
+      build += txt;
+    }
+
+    // Asignar la cadena en el layer seleccionado.
+    $(`#layer_${l}`).html(build);
   }
 }
 
-// Limpia una linea de texto
-function clean(_x, _y, txt) {
-  const txtSize = txt.length;
-  let x = _x;
-  let y = _y;
+/**
+ * #### Clean
+ * 100% Dependente de `draw`.
+ *
+ * Recibe un objeto como parametro.
+ *
+ * `x`: Punto X
+ *
+ * `y`: Punto Y
+ *
+ * `t`: Longitud del texto a Limpiar
+ *
+ * `l`: Layer seleccionado
+ *
+ * `m`: Modo Animacion de Limpieza(`right`, `left`, `inside`)
+ *
+ * `s`: Velocidad de Animacion Limpieza
+ *
+ * `o`: Objeto de Grafico A Limpiar (Si es array se limpia en modo multicapas)
+ */
+async function clean(props) {
+  let { x, y, t, f, b, o, s, l } = props;
+  let _t;
+  let _o;
 
-  if (x === -1) x = Math.round((WX - txtSize) / 2);
-  if (y === -1) y = Math.round((WY - txtSize) / 2);
+  let txt = "";
+  let length;
+  let cleanType;
 
-  for (let k = 0; k < txtSize; k++) {
-    $(`#${x + k}-${y}`).css("color", COLORS[0]);
-    $(`#${x + k}-${y}`).css("background-color", COLORS[0]);
-    $(`#${x + k}-${y}`).text("");
+  // Determinar modo.
+  if (typeof t !== "undefined") {
+    length = t.length;
+    cleanType = "text";
   }
+
+  if (Array.isArray(o)) {
+    length = o[0].text[0].length;
+    cleanType = "arrayObject";
+  } else if (typeof o !== "undefined") {
+    length = o.text[0].length;
+    cleanType = "object";
+  }
+
+  // Preparar texto
+  for (let k = 0; k < length; k++) {
+    txt += " ";
+  }
+
+  // Limpiar Variables
+  switch (cleanType) {
+    case "text":
+      _t = txt;
+      break;
+
+    case "object":
+      _o = { text: [] };
+
+      o.text.forEach(() => {
+        _o.text.push(txt);
+      });
+
+      break;
+
+    case "arrayObject":
+      _o = [];
+
+      for (let k = 0; k < o.length; k++) {
+        _o[k] = { text: [] };
+
+        o[k].text.forEach(() => {
+          _o[k].text.push(txt);
+        });
+      }
+
+      break;
+  }
+
+  f = T;
+  b = T;
+
+  await draw({ x, y, t: _t, f, b, o: _o, s, l });
 }
 
-// Limpia una linea de texto con una animacion especifica
-async function cleanMode(mode, _x, _y, txt, speed = 20) {
-  const txtSize = txt.length;
-  let x = _x;
-  let y = _y;
+/**
+ * #### Limpia todo el Layer.
+ * Acepta un objeto como parametro.
+ *
+ * `l`: Layer
+ *
+ * `b`: Color Background. (`T` por default).
+ */
+function wipeLayer(props) {
+  let { l, b } = props;
+  if (typeof b === "undefined") b = T;
 
-  if (x === -1) x = Math.round((WX - txtSize) / 2);
-  if (y === -1) y = Math.round((WY - txtSize) / 2);
+  $(`#layer_${l} td`)
+    .css("color", COLORS[getColorNumber(T)])
+    .css("background-color", COLORS[getColorNumber(b)])
+    .text("");
+}
 
-  switch (mode) {
-    case "right": {
-      for (let k = 0; k < txtSize; k++) {
-        $(`#${x + k}-${y}`).css("color", COLORS[0]);
-        $(`#${x + k}-${y}`).css("background-color", COLORS[0]);
-        $(`#${x + k}-${y}`).text("");
-
-        await sleep(speed);
-      }
-
-      break;
-    }
-
-    case "left": {
-      for (let k = txtSize - 1; k >= 0; k--) {
-        $(`#${x + k}-${y}`).css("color", COLORS[0]);
-        $(`#${x + k}-${y}`).css("background-color", COLORS[0]);
-        $(`#${x + k}-${y}`).text("");
-
-        await sleep(speed);
-      }
-
-      break;
-    }
-
-    case "inside": {
-      for (let k = 0; k < txtSize; k++) {
-        const j = txtSize - 1 - k;
-
-        $(`#${x + k}-${y}`).css("color", COLORS[0]);
-        $(`#${x + k}-${y}`).css("background-color", COLORS[0]);
-        $(`#${x + k}-${y}`).text("");
-
-        $(`#${j - x}-${y}`).css("color", COLORS[0]);
-        $(`#${j - x}-${y}`).css("background-color", COLORS[0]);
-        $(`#${j - x}-${y}`).text("");
-
-        await sleep(speed);
-        if (k > j) break;
-      }
-
-      break;
-    }
-  }
+function getCenterX(e) {
+  return Math.round((WX - e.length) / 2);
 }
 
 // ---------------------------------
@@ -203,12 +332,17 @@ function getColorNumber(e) {
   if (x == "D") x = 13;
   if (x == "E") x = 14;
   if (x == "F") x = 15;
+  if (x == "T" || x == " ") x = 16;
 
   return x;
 }
 
-function getCenterX(e) {
-  return Math.round((WX - e.length) / 2);
-}
+// Renderizado principal. (Afecta todos los tipos de Renderizado estandar)
+function render(_l, _x, _y, _t, _f, _b) {
+  const pixel = `#${_l}__${_x}-${_y}`;
 
-function inLayer(e) {}
+  $(pixel)
+    .css("color", COLORS[getColorNumber(_f)])
+    .css("background-color", COLORS[getColorNumber(_b)])
+    .text(_t);
+}

@@ -19,15 +19,15 @@ class Obj_0_menu {
   renderMenu() {
     switch (this.opc) {
       case 0: {
-        draw(-1, 13, " Nueva Partida ", F, C);
-        draw(-1, 14, " Salir ", F);
+        draw({ x: M, y: 13, t: " Nueva Partida ", b: C });
+        draw({ x: M, y: 14, t: " Salir " });
 
         break;
       }
 
       case 1: {
-        draw(-1, 13, " Nueva Partida ", F);
-        draw(-1, 14, " Salir ", F, C);
+        draw({ x: M, y: 13, t: " Nueva Partida " });
+        draw({ x: M, y: 14, t: " Salir ", b: C });
 
         break;
       }
@@ -51,8 +51,8 @@ class Obj_0_menu {
     this.fire.stop();
     await this.wif.clean();
     await this.bar.clean();
-    cleanMode("right", -1, 13, " Nueva Partida ");
-    await cleanMode("left", -1, 14, "         Salir ");
+    clean({ x: M, y: 13, t: " Nueva Partida ", m: right });
+    await clean({ x: M, y: 14, t: "         Salir ", m: left });
 
     if (this.opc === 0) main.next();
     if (this.opc === 1) main.return();

@@ -6,11 +6,9 @@ function* mainCode() {
   input();
 
   __palette();
+  __chars();
 
-  _0_menu.run();
-  yield 0;
-
-  _1_explain.run();
-
-  yield 0;
+  // yield _0_menu.run();
+  // yield _1_explain.run();
+  yield _2_gacha.run();
 }
