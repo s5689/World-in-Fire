@@ -1,4 +1,5 @@
 function __palette() {
+  $(".game").css("border", "1px solid rgba(255, 255, 255, 0.02)");
   let k = 0;
 
   COLORS.forEach((value) => {
@@ -88,6 +89,32 @@ function __chars() {
 
     k++;
   });
+}
+
+function __colors() {
+  $("#colors").css("display", "none");
+  $("#colors_btn").css("display", "block");
+  $(".dev_colors").css("display", "inline-grid");
+
+  for (let k = 0; k < COLORS.length - 1; k++) {
+    for (let j = 0; j < COLORS.length - 1; j++) {
+      let txt = "";
+
+      txt += `<span style="background-color: ${COLORS[k]}; color: ${COLORS[j]}">`;
+      txt += "¡Este es un texto de prueba!";
+      txt += "</span>";
+
+      // if (j !== 15) txt += "<br />";
+
+      $(`#colors${k}`).append(txt);
+    }
+  }
+}
+
+function __showColors() {
+  if ($("#colors").attr("style") === "display: none;")
+    $("#colors").css("display", "block");
+  else $("#colors").css("display", "none");
 }
 
 class CCronometro extends SpriteAnimated {

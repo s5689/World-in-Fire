@@ -21,6 +21,8 @@ function setWindowSize(limX = 80, limY = 25) {
 
       $(`#layer_${k}`).append(txt);
     }
+
+    LAYERS.push(k);
   }
 }
 
@@ -236,7 +238,7 @@ async function draw(props) {
  * `o`: Objeto de Grafico A Limpiar (Si es array se limpia en modo multicapas)
  */
 async function clean(props) {
-  let { x, y, t, f, b, o, s, l } = props;
+  let { x, y, t, f, b, o, s, l, m } = props;
   let _t;
   let _o;
 
@@ -295,7 +297,7 @@ async function clean(props) {
   f = T;
   b = T;
 
-  await draw({ x, y, t: _t, f, b, o: _o, s, l });
+  await draw({ x, y, t: _t, f, b, o: _o, s, l, m });
 }
 
 /**
@@ -316,6 +318,18 @@ function wipeLayer(props) {
     .text("");
 }
 
+/**
+ * #### Limpia todo el buffer.
+ * No acepta parametros.
+ *
+ * Util para asegurar un lienzo limpio.
+ */
+function wipeAllLayers() {
+  LAYERS.forEach((value) => {
+    wipeLayer({ l: value });
+  });
+}
+
 function getCenterX(e) {
   return Math.round((WX - e.length) / 2);
 }
@@ -326,13 +340,13 @@ function getCenterX(e) {
 function getColorNumber(e) {
   let x = e;
 
-  if (x == "A") x = 10;
-  if (x == "B") x = 11;
-  if (x == "C") x = 12;
-  if (x == "D") x = 13;
-  if (x == "E") x = 14;
-  if (x == "F") x = 15;
-  if (x == "T" || x == " ") x = 16;
+  if (x === "A") x = 10;
+  if (x === "B") x = 11;
+  if (x === "C") x = 12;
+  if (x === "D") x = 13;
+  if (x === "E") x = 14;
+  if (x === "F") x = 15;
+  if (x === "T" || x === " ") x = 16;
 
   return x;
 }

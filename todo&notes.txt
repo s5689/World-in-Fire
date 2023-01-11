@@ -28,3 +28,13 @@ Screen Template:
   "                                                                                ",
 ];
 
+--------
+ Ideas:
+--------
+La protagonista es Routh, una chica de corta edad que esta participando en el <World in Fire>.
+Un festival anual dedicado a celebrar el fin del mundo y el nacimiento de la era del fuego.
+Este es el motivo por el cual los enemigos no tienen mucha relacion unos con otros, pues este nuevo
+mundo no se aferra al sentido comun.
+
+La primera etapa se desarrolla en la entrada del festival, donde se organiza un evento infantil donde los niños
+se preparan para luchar unos con otros ejemplificando la conquista del Señor del Fuego sobre toda la tierra.

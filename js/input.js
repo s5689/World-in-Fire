@@ -12,6 +12,11 @@ function input() {
         _1_explain.end();
         break;
       }
+
+      case "_2_gacha": {
+        _2_gacha.input(key);
+        break;
+      }
     }
   });
 }

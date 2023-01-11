@@ -1,8 +1,10 @@
 var WX; // X de la pantalla
 var WY; // Y de la pantalla
-var CONTEXT;
+var LAYERS = []; // ID de todos los layers disponibles
+var CONTEXT; // Variable de control para <input>
 var COLORS = [
-  "rgba(0, 0, 0, 1)",
+  // "rgba(0, 0, 0, 1)",
+  "black",
   "rgba(0, 0, 128, 1)",
   "rgba(0, 128, 0, 1)",
   "rgba(0, 128, 128, 1)",

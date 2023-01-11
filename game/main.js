@@ -5,10 +5,12 @@ function* mainCode() {
   setWindowSize();
   input();
 
+  /*
   __palette();
   __chars();
-
-  // yield _0_menu.run();
-  // yield _1_explain.run();
+  __colors();
+  */
+  yield _0_menu.run();
+  yield _1_explain.run();
   yield _2_gacha.run();
 }
