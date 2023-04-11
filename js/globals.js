@@ -35,7 +35,7 @@ var T = 'T'; // ->Transparente
 var right = 'right';
 var left = 'left';
 var inside = 'inside';
-var M = 'CENTER';
+var center = 'CENTER';
 
 // Globalizar Sleep
 async function sleep(ms) {

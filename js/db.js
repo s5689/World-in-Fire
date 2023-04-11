@@ -187,7 +187,7 @@ export const ItemList = [
   {
     name: 'Sombrilla',
     color: F,
-    desc: ['+13 de Daño Magico', 'Ten cuidado con los vientos fuertes.'],
+    desc: ['+13 de Daño Magico', 'Efectivamente, es una Sombrilla.'],
     value: [{ AP: 13 }],
   },
   {

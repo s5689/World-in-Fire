@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   dev();
 
   document.fonts.ready.then(async () => {
-    await sleep(500);
+    // await sleep(1000);
     phase.next();
   });
 });

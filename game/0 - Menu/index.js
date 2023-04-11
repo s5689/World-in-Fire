@@ -16,15 +16,15 @@ export async function _0_menu() {
 function renderMenu() {
   switch (opc) {
     case 0: {
-      draw({ x: M, y: 13, t: ' Nueva Partida ', b: C });
-      draw({ x: M, y: 14, t: ' Salir ' });
+      draw({ x: center, y: 13, t: ' Nueva Partida ', b: C });
+      draw({ x: center, y: 14, t: ' Salir ' });
 
       break;
     }
 
     case 1: {
-      draw({ x: M, y: 13, t: ' Nueva Partida ' });
-      draw({ x: M, y: 14, t: ' Salir ', b: C });
+      draw({ x: center, y: 13, t: ' Nueva Partida ' });
+      draw({ x: center, y: 14, t: ' Salir ', b: C });
 
       break;
     }

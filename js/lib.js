@@ -94,8 +94,8 @@ export async function draw(props) {
     if (typeof l === 'undefined') l = 0;
 
     // Si se debe centrar
-    if (x === M) x = Math.round((WX - tSize) / 2);
-    if (y === M) y = Math.round((HY - aSize) / 2);
+    if (x === center) x = Math.round((WX - tSize) / 2);
+    if (y === center) y = Math.round((HY - aSize) / 2);
   }
 
   // Renderizar una linea de texto.

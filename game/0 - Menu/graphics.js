@@ -183,6 +183,6 @@ export async function removeAll() {
   });
 
   // Limpiar Menu de opciones
-  clean({ x: M, y: 13, t: ' Nueva Partida ', m: right });
-  await clean({ x: M, y: 14, t: '         Salir ', m: left });
+  clean({ x: center, y: 13, t: ' Nueva Partida ', m: right });
+  await clean({ x: center, y: 14, t: '         Salir ', m: left });
 }

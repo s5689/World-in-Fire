@@ -7,7 +7,7 @@ export async function _1_explain() {
   await buildBox();
 
   draw({
-    x: M,
+    x: center,
     y: 1,
     t: ' Definicion de Abreviaturas ',
     f: F,
@@ -17,7 +17,7 @@ export async function _1_explain() {
   });
 
   await draw({
-    x: M,
+    x: center,
     y: 22,
     t: 'Presiona una tecla para continuar.',
     f: C,

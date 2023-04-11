@@ -34,7 +34,7 @@ export async function gacha(e) {
   do {
     await sleep(speed);
 
-    clean({ x: M, y: yName, t: name });
+    clean({ x: center, y: yName, t: name });
 
     k = Math.round(Math.random() * limitDB);
     desc = usingDB[k].desc;
@@ -42,7 +42,7 @@ export async function gacha(e) {
     color = usingDB[k].color;
     background = usingDB[k].background;
 
-    draw({ x: M, y: yName, t: name, f: color, b: background });
+    draw({ x: center, y: yName, t: name, f: color, b: background });
 
     if (!rolling) {
       if (speed < 100) speed += 5;
@@ -53,8 +53,8 @@ export async function gacha(e) {
 
   if (desc.length > 2) _y--;
 
-  desc.forEach((value) => {
-    draw({ x: M, y: _y, t: value });
+  desc.map((value, key) => {
+    draw({ x: center, y: _y, t: value, f: key === 0 ? F : 8 });
     _y++;
   });
 
